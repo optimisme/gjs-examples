@@ -60,6 +60,7 @@ using Gtk HeaderBar, SearchBar, ActionBar and a filtered FlowBox
 
 GJS example showing how to build Gtk javascript applications
 executing a non blocking command line call, it uses
-TextBuffer, TextView and GLib.spawn_async_with_pipes
+TextBuffer, TextView, GLib.spawn_async_with_pipes,
+Gio.UnixInputStream, Gio.DataInputStream and read_line_async
 
 ![egSpawn1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSpawn1.png)
