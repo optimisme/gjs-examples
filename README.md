@@ -6,6 +6,7 @@ GJS examples showing how to build Gtk javascript applications
 Download this project with:
 
 git clone https://github.com/optimisme/gjs-examples.git
+
 cd gjs-examples
 
 Then run the examples with:
