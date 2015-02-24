@@ -55,3 +55,11 @@ GJS example showing how to build Gtk javascript applications
 using Gtk HeaderBar, SearchBar, ActionBar and a filtered FlowBox
 
 ![egSearch1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSearch1.png)
+
+### egSpawn
+
+GJS example showing how to build Gtk javascript applications
+executing a non blocking command line call, it uses
+TextBuffer, TextView and GLib.spawn_async_with_pipes
+
+![egSpawn1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSpawn1.png)

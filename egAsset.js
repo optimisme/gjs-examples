@@ -1,5 +1,4 @@
-const Gtk   = imports.gi.Gtk;
-const Lang  = imports.lang;
+#!/usr/bin/gjs
 
 /*
 GJS example showing how to build Gtk javascript applications
@@ -8,6 +7,9 @@ using Gtk.Image
 Run it with:
     gjs egAsset.js
 */
+
+const Gtk   = imports.gi.Gtk;
+const Lang  = imports.lang;
 
 const App = function () { };
 

@@ -1,5 +1,4 @@
-const Gtk   = imports.gi.Gtk;
-const Lang  = imports.lang;
+#!/usr/bin/gjs
 
 /*
 GJS example showing how to build Gtk javascript applications
@@ -7,8 +6,11 @@ setting the application icon from the 'assets' folder and if
 not available from the 'stock icons'
 
 Run it with:
-    gjs egAsset.js
+    gjs egIcon.js
 */
+
+const Gtk   = imports.gi.Gtk;
+const Lang  = imports.lang;
 
 const App = function () { };
 
