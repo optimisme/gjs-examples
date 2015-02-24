@@ -12,15 +12,21 @@ cd gjs-examples
 Then run the examples with:
 
 gjs egAsset.js
+
 gjs egHeader.js
+
 gjs egList.js
+
 gjs egSearch.js
+
 ...
 
 ### egAsset
 
 GJS example showing how to build Gtk javascript applications
 using Gtk.Image
+
+![egAsset1](https://raw.github.com/optimisme/gjs-examples/master/captures/egAsset1.png)
 
 ### egList
 
