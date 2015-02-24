@@ -34,7 +34,7 @@ App.prototype.buildUI = function() {
     this.window = new Gtk.ApplicationWindow({ application: this.application,
                                               title: "Example Asset" });
     this.window.set_default_size(200, 200);
-    this.image = new Gtk.Image ({ file: "./assets/exAsset.png" });
+    this.image = new Gtk.Image ({ file: "./assets/egAsset.png" });
     this.window.add(this.image);
 };
 
