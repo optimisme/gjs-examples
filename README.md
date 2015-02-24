@@ -28,6 +28,12 @@ using Gtk.Image
 
 ![egAsset1](https://raw.github.com/optimisme/gjs-examples/master/captures/egAsset1.png)
 
+### egIcon
+
+GJS example showing how to build Gtk javascript applications
+setting the application icon from the 'assets' folder and if
+not available from the 'stock icons'
+
 ### egList
 
 GJS example showing how to build Gtk javascript applications
