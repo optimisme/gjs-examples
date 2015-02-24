@@ -40,7 +40,7 @@ App.prototype.buildUI = function() {
     let scroll;
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Icon" });
+                                              title: "Example Spawn" });
     this.window.set_default_size(200, 200);
     try {
         this.window.set_icon_from_file('./assets/app-icon.png');
