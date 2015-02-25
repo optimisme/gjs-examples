@@ -14,7 +14,7 @@ const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
 
 // Get application folder and add it into the imports path
-function getCurrentFile() {
+function getAppFileInfo() {
     let stack = (new Error()).stack,
         stackLine = stack.split('\n')[1],
         coincidence, path, file;
@@ -28,7 +28,7 @@ function getCurrentFile() {
     file = Gio.File.new_for_path(path);
     return [file.get_path(), file.get_parent().get_path(), file.get_basename()];
 }
-const path = getCurrentFile()[1];
+const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
 const App = function () { 

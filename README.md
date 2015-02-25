@@ -82,3 +82,10 @@ Gio File new_for_path, load_contents_async, query_info_async
 
 ![egOpen1](https://raw.github.com/optimisme/gjs-examples/master/captures/egOpen1.png)
 ![egOpen2](https://raw.github.com/optimisme/gjs-examples/master/captures/egOpen2.png)
+
+### egInfo.js
+
+GJS example showing how to build Gtk javascript applications
+getting information from GLib and command line
+
+![egInfo1](https://raw.github.com/optimisme/gjs-examples/master/captures/egInfo1.png)
