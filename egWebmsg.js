@@ -3,7 +3,7 @@
 /*
 GJS example showing how to build Gtk javascript applications
 using Webkit.WebView, also showing how to send messages from GTK
-to Webkit and viceversa
+to Webkit and vice versa
 
 Run it with:
     gjs egWebmsg.js
