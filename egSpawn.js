@@ -15,6 +15,24 @@ const GLib  = imports.gi.GLib;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
 
+// Get application folder and add it into the imports path
+function getCurrentFile() {
+    let stack = (new Error()).stack,
+        stackLine = stack.split('\n')[1],
+        coincidence, path, file;
+
+    if (!stackLine) throw new Error('Could not find current file (1)');
+
+    coincidence = new RegExp('@(.+):\\d+').exec(stackLine);
+    if (!coincidence) throw new Error('Could not find current file (2)');
+
+    path = coincidence[1];
+    file = Gio.File.new_for_path(path);
+    return [file.get_path(), file.get_parent().get_path(), file.get_basename()];
+}
+const path = getCurrentFile()[1];
+imports.searchPath.push(path);
+
 const App = function () { };
 
 App.prototype.run = function (ARGV) {
@@ -44,7 +62,7 @@ App.prototype.buildUI = function() {
                                               title: "Example Spawn" });
     this.window.set_default_size(200, 200);
     try {
-        this.window.set_icon_from_file('./assets/app-icon.png');
+        this.window.set_icon_from_file(path + '/assets/app-icon.png');
     } catch (err) {
         this.window.set_icon_name('application-x-executable');
     }
@@ -65,7 +83,6 @@ App.prototype.spawn = function() {
 
     [res, pid, stdin, stdout, stderr] = GLib.spawn_async_with_pipes(
         './', ['ls', '-ltr', '.'], null, GLib.SpawnFlags.SEARCH_PATH, null);
-        //'./', ['tail', '-f', './egSpawn.js'], null, GLib.SpawnFlags.SEARCH_PATH, null);
 
     stream = new Gio.DataInputStream({ base_stream : new Gio.UnixInputStream({ fd : stdout }) });
     this.read(stream);

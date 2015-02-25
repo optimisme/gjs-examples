@@ -8,8 +8,27 @@ Run it with:
     gjs egAsset.js
 */
 
+const Gio   = imports.gi.Gio;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
+
+// Get application folder and add it into the imports path
+function getCurrentFile() {
+    let stack = (new Error()).stack,
+        stackLine = stack.split('\n')[1],
+        coincidence, path, file;
+
+    if (!stackLine) throw new Error('Could not find current file (1)');
+
+    coincidence = new RegExp('@(.+):\\d+').exec(stackLine);
+    if (!coincidence) throw new Error('Could not find current file (2)');
+
+    path = coincidence[1];
+    file = Gio.File.new_for_path(path);
+    return [file.get_path(), file.get_parent().get_path(), file.get_basename()];
+}
+const path = getCurrentFile()[1];
+imports.searchPath.push(path);
 
 const App = function () { };
 
@@ -37,12 +56,12 @@ App.prototype.buildUI = function() {
                                               title: "Example Asset" });
     this.window.set_default_size(200, 200);
     try {
-        this.window.set_icon_from_file('./assets/app-icon.png');
+        this.window.set_icon_from_file(path + '/assets/app-icon.png');
     } catch (err) {
         this.window.set_icon_name('application-x-executable');
     }
 
-    this.image = new Gtk.Image ({ file: "./assets/egAsset.png" });
+    this.image = new Gtk.Image ({ file: path + '/assets/egAsset.png' });
     this.window.add(this.image);
 };
 

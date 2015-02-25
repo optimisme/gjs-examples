@@ -8,9 +8,28 @@ Run it with:
     gjs egList.js
 */
 
+const Gio   = imports.gi.Gio;
 const GObj  = imports.gi.GObject;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
+
+// Get application folder and add it into the imports path
+function getCurrentFile() {
+    let stack = (new Error()).stack,
+        stackLine = stack.split('\n')[1],
+        coincidence, path, file;
+
+    if (!stackLine) throw new Error('Could not find current file (1)');
+
+    coincidence = new RegExp('@(.+):\\d+').exec(stackLine);
+    if (!coincidence) throw new Error('Could not find current file (2)');
+
+    path = coincidence[1];
+    file = Gio.File.new_for_path(path);
+    return [file.get_path(), file.get_parent().get_path(), file.get_basename()];
+}
+const path = getCurrentFile()[1];
+imports.searchPath.push(path);
 
 const App = function () { 
     this.selectionMode = false;
@@ -40,7 +59,7 @@ App.prototype.buildUI = function() {
     this.window = new Gtk.ApplicationWindow({ application: this.application });
     this.window.set_default_size(720, 300);
     try {
-        this.window.set_icon_from_file('./assets/app-icon.png');
+        this.window.set_icon_from_file(path + '/assets/app-icon.png');
     } catch (err) {
         this.window.set_icon_name('application-x-executable');
     }
