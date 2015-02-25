@@ -89,3 +89,11 @@ GJS example showing how to build Gtk javascript applications
 getting information from GLib and command line
 
 ![egInfo1](https://raw.github.com/optimisme/gjs-examples/master/captures/egInfo1.png)
+
+### egWebmsg.js
+
+GJS example showing how to build Gtk javascript applications
+using Webkit.WebView, also showing how to send messages from GTK
+to Webkit and viceversa
+
+![egWebmsg1](https://raw.github.com/optimisme/gjs-examples/master/captures/egWebmsg1.png)
