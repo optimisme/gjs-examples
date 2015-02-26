@@ -83,6 +83,7 @@ App.prototype.spawn = function() {
 
     [res, pid, stdin, stdout, stderr] = GLib.spawn_async_with_pipes(
         './', ['ls', '-ltr', '.'], null, GLib.SpawnFlags.SEARCH_PATH, null);
+        //'./', ['tail', '-f', 'a.txt'], null, GLib.SpawnFlags.SEARCH_PATH, null);
 
     stream = new Gio.DataInputStream({ base_stream : new Gio.UnixInputStream({ fd : stdout }) });
     this.read(stream);
@@ -92,13 +93,13 @@ App.prototype.read = function (stream) {
 
     stream.read_line_async(GLib.PRIORITY_LOW, null, Lang.bind (this, function (source, res) {
 
-        let out, length, error;
+        let out, length;
 
-        [out, length, error] = source.read_line_finish(res);
+        [out, length] = source.read_line_finish(res);
         if (out !== null) {
             this.buffer.insert_at_cursor(String(out) + '\n', -1);
+            this.read(source);
         }
-        this.read(source);
     }));
 };
 

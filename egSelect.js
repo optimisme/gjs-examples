@@ -2,7 +2,8 @@
 
 /*
 GJS example showing how to build Gtk javascript applications
-using Gtk HeaderBar, SearchBar and a filtered FlowBox
+using Gtk HeaderBar, SearchBar, ActionBar, a filtered FlowBox,
+an application library and custom widgets
 
 Run it with:
     gjs egSearchjs
@@ -31,8 +32,10 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
+const Select = imports.assets.select;
+
 const App = function () { 
-    this.filterText = '';
+    this.selectionMode = false;
 };
 
 App.prototype.run = function (ARGV) {
@@ -46,6 +49,9 @@ App.prototype.run = function (ARGV) {
 App.prototype.onActivate = function () {
 
     this.window.show_all();
+    this.buttonCancel.hide();
+    this.actionBar.hide();
+    this.flow.setSelectingMode(false);
 };
 
 App.prototype.onStartup = function() {
@@ -56,7 +62,7 @@ App.prototype.onStartup = function() {
 App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application });
-    this.window.set_default_size(720, 325);
+    this.window.set_default_size(720, 400);
     try {
         this.window.set_icon_from_file(path + '/assets/app-icon.png');
     } catch (err) {
@@ -69,16 +75,20 @@ App.prototype.buildUI = function() {
 
     this.content.add(this.getSearch());
     this.content.add(this.getBody());
+    this.content.add(this.getActionBar());
 
     this.window.add(this.content);
 };
 
 App.prototype.getHeader = function () {
 
-    let imageSearch;
+    let headerEnd, imageSearch, imageSelect;
 
     this.headerBar = new Gtk.HeaderBar();
     this.headerBar.set_show_close_button(true);
+
+    headerEnd = new Gtk.Grid();
+    headerEnd.set_column_spacing(this.headerBar.spacing);
 
     imageSearch = new Gtk.Image ({ icon_name: 'edit-find-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     this.buttonSearch = new Gtk.ToggleButton({ image: imageSearch });
@@ -90,7 +100,17 @@ App.prototype.getHeader = function () {
         }
     }));
 
-    this.headerBar.pack_end(this.buttonSearch);
+    imageSelect = new Gtk.Image ({ icon_name: 'emblem-ok-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
+    this.buttonSelect = new Gtk.Button({ image: imageSelect });
+    this.buttonSelect.connect ('clicked', Lang.bind (this, function () { this.selectionShow(true); }));
+
+    this.buttonCancel = new Gtk.Button({ label: "Cancel" });
+    this.buttonCancel.connect ('clicked', Lang.bind (this, function () { this.selectionShow(false); }));
+
+    headerEnd.attach(this.buttonSearch, 0, 0, 1, 1);
+    headerEnd.attach(this.buttonSelect, 1, 0, 1, 1);
+    headerEnd.attach(this.buttonCancel, 2, 0, 1, 1);
+    this.headerBar.pack_end(headerEnd);
 
     return this.headerBar;
 };
@@ -108,8 +128,8 @@ App.prototype.getSearch = function () {
     searchEntry.show();
 
     searchEntry.connect('search-changed', Lang.bind (this, function () {
-        this.filterText = searchEntry.get_text();
-        this.flow.invalidate_filter();
+        this.flow.filterText = searchEntry.get_text();
+        this.flow.widget.invalidate_filter();
     }));
     this.window.connect('key-press-event', Lang.bind (this, function (widget, event) {
         let key = event.get_keyval()[1];
@@ -122,7 +142,11 @@ App.prototype.getSearch = function () {
                 this.buttonSearch.set_active(true);
             }
         } else {
-            this.buttonSearch.set_active(false);
+            if (this.buttonSearch.get_active()) {
+                this.buttonSearch.set_active(false);
+            } else if (this.selectionMode) {
+                this.selectionShow(false);
+            }
         }
     }));
     this.searchBar.connect_entry(searchEntry);
@@ -133,49 +157,69 @@ App.prototype.getSearch = function () {
 
 App.prototype.getBody = function () {
 
-    let scroll;
+    let scroll, id;
 
     scroll = new Gtk.ScrolledWindow({ vexpand: true });
-    this.flow = new Gtk.FlowBox({ vexpand: true });
-    this.flow.set_filter_func(Lang.bind (this, this.filter));
 
-    this.flow.insert(this.newFlowLabel('1a lorem'), -1);
-    this.flow.insert(this.newFlowLabel('2b ipsum'), -1);
-    this.flow.insert(this.newFlowLabel('3c dolor'), -1);
-    this.flow.insert(this.newFlowLabel('4d sit set'), -1);
-    this.flow.insert(this.newFlowLabel('5e amet'), -1);
-    this.flow.insert(this.newFlowLabel('6f consectetur'), -1);
-    this.flow.insert(this.newFlowLabel('7g adipiscing'), -1);
-    this.flow.insert(this.newFlowLabel('8h elit'), -1);
-    this.flow.insert(this.newFlowLabel('9i set'), -1);
+    this.flow = new Select.SelectFlow();
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 1 lorem'); 
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 2 ipsum');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 3 dolor');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 4 sit');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 5 amet');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 6 consectetur set amet');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 7 adipiscing');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 8 elit');
+    id = this.flow.insert(path + '/assets/egSelect.png', 'Label 9 set');
+    this.flow.connect('selection-changed', Lang.bind (this, function () {
+        if (this.flow.selected.length > 0) {
+            this.buttonDelete.set_sensitive(true);
+        } else {
+            this.buttonDelete.set_sensitive(false);
+        }
+    }));
+    this.flow.connect('action', Lang.bind (this, function (id) {
+        this.printText('Do something for: ' + id);
+    }));
 
-    scroll.add(this.flow);
+    scroll.add(this.flow.widget);
+
     return scroll;
 };
 
-App.prototype.newFlowLabel = function (text) {
+App.prototype.getActionBar = function () {
 
-    let label = new Gtk.Label({ label: text });
+    this.actionBar = new Gtk.ActionBar();
 
-    label.set_size_request(125, 125);
-    return label;
+    this.buttonDelete = new Gtk.Button({ label: "Delete", sensitive: false });
+    this.buttonDelete.connect ('clicked', Lang.bind (this, function() {
+        this.printText('Will delete: ' + JSON.stringify(this.flow.selected));
+        this.flow.deleteSelected();
+    }));
+    this.actionBar.pack_end(this.buttonDelete);
+
+    return this.actionBar;
 };
 
-App.prototype.filter = function (item) {
+App.prototype.selectionShow = function (show) {
 
+    this.selectionMode = show;
 
-    let label = item.get_child().get_label();
-   
-    if (this.filterText !== '') {
-        if (label.indexOf(this.filterText) !== -1) {
-            return true;
-        } else {
-            return false;
-        }
+    if (show) {
+        this.buttonSelect.hide();
+        this.buttonCancel.show();
+        
+        this.headerBar.get_style_context().add_class('selection-mode');
+        this.actionBar.show();
     } else {
-
-        return true;
+        this.buttonSelect.show();
+        this.buttonCancel.hide();
+        this.headerBar.get_style_context().remove_class('selection-mode');
+        this.actionBar.hide();
     }
+
+    this.headerBar.set_show_close_button(!show);
+    this.flow.setSelectingMode(show);
 };
 
 App.prototype.printText = function (text) {
