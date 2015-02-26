@@ -56,8 +56,10 @@ App.prototype.onStartup = function() {
 App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Open" });
-    this.window.set_default_size(500, 400);
+                                              title: "Example Open",
+                                              default_height: 400,
+                                              default_width: 500,
+                                              window_position: Gtk.WindowPosition.CENTER });
     try {
         this.window.set_icon_from_file(path + '/assets/app-icon.png');
     } catch (err) {
