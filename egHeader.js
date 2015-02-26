@@ -50,7 +50,10 @@ const PopWidget = function (label, widget) {
     this.pop.add(widget);
 };
 
-const App = function () { };
+const App = function () { 
+    this.title = 'Example Header';
+    GLib.set_prgname(this.title);
+};
 
 App.prototype.run = function (ARGV) {
 

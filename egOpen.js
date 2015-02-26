@@ -33,7 +33,11 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
-const App = function () { };
+const App = function () { 
+
+    this.title = 'Example Open';
+    GLib.set_prgname(this.title);
+};
 
 App.prototype.run = function (ARGV) {
 
@@ -56,7 +60,7 @@ App.prototype.onStartup = function() {
 App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Open",
+                                              title: this.title,
                                               default_height: 400,
                                               default_width: 500,
                                               window_position: Gtk.WindowPosition.CENTER });

@@ -11,6 +11,7 @@ Run it with:
 */
 
 const Gio       = imports.gi.Gio;
+const GLib      = imports.gi.GLib;
 const Gtk       = imports.gi.Gtk;
 const Lang      = imports.lang;
 
@@ -36,6 +37,10 @@ imports.searchPath.push(path);
 const Timers    = imports.assets.timers;
 
 const App = function () { 
+
+    this.title = 'Example Timers';
+    GLib.set_prgname(this.title);
+
     this.idTimeout;
     this.idInterval;
     this.counter = 0;
@@ -64,7 +69,7 @@ App.prototype.buildUI = function() {
     let scroll;
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Timers",
+                                              title: this.title,
                                               default_height: 200,
                                               default_width: 200,
                                               window_position: Gtk.WindowPosition.CENTER });

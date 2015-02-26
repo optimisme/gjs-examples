@@ -33,6 +33,9 @@ imports.searchPath.push(path);
 
 const App = function () { 
 
+    this.title = 'Example Info';
+    GLib.set_prgname(this.title);
+
     this.info = {
         desktop: '',
         host: '',
@@ -71,7 +74,7 @@ App.prototype.onStartup = function() {
 App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Info",
+                                              title: this.title,
                                               default_height: 400,
                                               default_width: 400,
                                               window_position: Gtk.WindowPosition.CENTER });

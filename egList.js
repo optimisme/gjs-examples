@@ -9,6 +9,7 @@ Run it with:
 */
 
 const Gio   = imports.gi.Gio;
+const GLib  = imports.gi.GLib;
 const GObj  = imports.gi.GObject;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
@@ -32,8 +33,9 @@ const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
 const App = function () { 
-    this.selectionMode = false;
-    this.filterText = '';
+
+    this.title = 'Example List';
+    GLib.set_prgname(this.title);
 };
 
 App.prototype.run = function (ARGV) {

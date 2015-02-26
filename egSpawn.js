@@ -33,7 +33,12 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
-const App = function () { };
+const App = function () { 
+
+    this.title = 'Example Spawn';
+    GLib.set_prgname(this.title);
+};
+
 
 App.prototype.run = function (ARGV) {
 
@@ -59,7 +64,7 @@ App.prototype.buildUI = function() {
     let scroll;
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Spawn",
+                                              title: this.title,
                                               default_height: 200,
                                               default_width: 200,
                                               window_position: Gtk.WindowPosition.CENTER });

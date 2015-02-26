@@ -10,6 +10,7 @@ Run it with:
 */
 
 const Gio   = imports.gi.Gio;
+const GLib  = imports.gi.GLib;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
 const Pango = imports.gi.Pango;
@@ -33,6 +34,8 @@ const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
 const App = function () { 
+    this.title = 'Example Event';
+    GLib.set_prgname(this.title);
 
     this.text = 'Click here ... ';
     this.counter = 0;
@@ -59,7 +62,7 @@ App.prototype.onStartup = function() {
 App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
-                                              title: "Example Event",
+                                              title: this.title,
                                               default_height: 200,
                                               default_width: 200,
                                               window_position: Gtk.WindowPosition.CENTER });

@@ -10,8 +10,9 @@ Run it with:
     gjs egSearchjs
 */
 
-const Gio   = imports.gi.Gio;
 const Gdk   = imports.gi.Gdk;
+const Gio   = imports.gi.Gio;
+const GLib  = imports.gi.GLib;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
 
@@ -36,6 +37,10 @@ imports.searchPath.push(path);
 const Select = imports.assets.select;
 
 const App = function () { 
+
+    this.title = 'Example Select';
+    GLib.set_prgname(this.title);
+
     this.selectionMode = false;
 };
 
