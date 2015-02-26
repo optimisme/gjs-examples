@@ -99,7 +99,9 @@ using Gtk HeaderBar, and Popover buttons with Gtk Widget or Gio GMenu.
 ### egSearch.js
 
 GJS example showing how to build Gtk javascript applications
-using Gtk HeaderBar, SearchBar and a filtered FlowBox
+using Gtk HeaderBar, SearchBar, ActionBar, a filtered FlowBox,
+an application library and custom widgets to create a selection
+mode
 
 ![egSearch1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSearch1.png)
 

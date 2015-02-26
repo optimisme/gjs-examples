@@ -3,7 +3,8 @@
 /*
 GJS example showing how to build Gtk javascript applications
 using Gtk HeaderBar, SearchBar, ActionBar, a filtered FlowBox,
-an application library and custom widgets
+an application library and custom widgets to create a selection
+mode
 
 Run it with:
     gjs egSearchjs
