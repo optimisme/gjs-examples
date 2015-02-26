@@ -37,7 +37,7 @@ not available from the 'stock icons'
 ### egCss.js
 
 GJS example showing how to build Gtk javascript applications
-using Gtk.CssProvider or loading .css files
+using Gtk.CssProvider from source code or from loaded .css files
 
 ![egCss1](https://raw.github.com/optimisme/gjs-examples/master/captures/egCss1.png)
 

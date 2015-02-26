@@ -2,7 +2,7 @@
 
 /*
 GJS example showing how to build Gtk javascript applications
-using Gtk.CssProvider or loading .css files
+using Gtk.CssProvider from source code or from loaded .css files
 
 Run it with:
     gjs egCss.js
