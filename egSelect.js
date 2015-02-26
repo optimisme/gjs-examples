@@ -70,14 +70,7 @@ App.prototype.buildUI = function() {
     }
 
     this.window.set_titlebar(this.getHeader());
-
-    this.content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-
-    this.content.add(this.getSearch());
-    this.content.add(this.getBody());
-    this.content.add(this.getActionBar());
-
-    this.window.add(this.content);
+    this.window.add(this.getBody());
 };
 
 App.prototype.getHeader = function () {
@@ -113,6 +106,16 @@ App.prototype.getHeader = function () {
     this.headerBar.pack_end(headerEnd);
 
     return this.headerBar;
+};
+
+App.prototype.getBody = function () {
+
+    this.content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
+    this.content.add(this.getSearch());
+    this.content.add(this.getFlow());
+    this.content.add(this.getActionBar());
+
+    return this.content;
 };
 
 App.prototype.getSearch = function () {
@@ -155,7 +158,7 @@ App.prototype.getSearch = function () {
     return this.searchBar;
 };
 
-App.prototype.getBody = function () {
+App.prototype.getFlow = function () {
 
     let scroll, id;
 

@@ -34,6 +34,13 @@ GJS example showing how to build Gtk javascript applications
 setting the application icon from the 'assets' folder and if
 not available from the 'stock icons'
 
+### egCss.js
+
+GJS example showing how to build Gtk javascript applications
+using Gtk.CssProvider or loading .css files
+
+![egCss1](https://raw.github.com/optimisme/gjs-examples/master/captures/egCss1.png)
+
 ### egJustify.js
 
 GJS example showing how to build Gtk javascript applications
@@ -49,6 +56,14 @@ functions with Mainloop timeout_add. It also shows how to import
 and use an application library
 
 ![egTimers1](https://raw.github.com/optimisme/gjs-examples/master/captures/egTimers1.png)
+
+### egEvent.js
+
+GJS example showing how to build Gtk javascript applications
+using Gtk.EventBox to catch events for widgets which do not 
+have their own window
+
+![egEvent1](https://raw.github.com/optimisme/gjs-examples/master/captures/egEvent1.png)
 
 ### egInfo.js
 

@@ -24,11 +24,11 @@ SelectItem.prototype.setSelectingMode = function(selection) {
 
 SelectItem.prototype.getWidget = function (image, text) {
 
-    let overlay, widget, event;
+    let css, overlay, widget, event;
 
     this.image = new Gtk.Image ({ file: image });
 
-    let css = new Gtk.CssProvider();
+    css = new Gtk.CssProvider();
     css.load_from_data(' * { background-color: rgba(0, 0, 0, 0.3); border-radius: 5px; }');
 
     this.box = new Gtk.Box({halign: Gtk.Align.END, margin: 10, valign: Gtk.Align.END});
@@ -71,7 +71,7 @@ SelectItem.prototype.getWidget = function (image, text) {
                 this.signals.action(this.id);
             }
         }
-    } ));
+    }));
 
     return event;
 };
