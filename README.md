@@ -34,6 +34,13 @@ GJS example showing how to build Gtk javascript applications
 setting the application icon from the 'assets' folder and if
 not available from the 'stock icons'
 
+### egJustify.js
+
+GJS example showing how to build Gtk javascript applications
+using Gtk.Label and its justification options
+
+![egJustify1](https://raw.github.com/optimisme/gjs-examples/master/captures/egJustify1.png)
+
 ### egTimers.js
 
 GJS example showing how to build Gtk javascript applications
