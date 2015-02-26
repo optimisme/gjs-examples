@@ -34,6 +34,8 @@ GJS example showing how to build Gtk javascript applications
 setting the application icon from the 'assets' folder and if
 not available from the 'stock icons'
 
+![egIcon1](https://raw.github.com/optimisme/gjs-examples/master/captures/egIcon1.png)
+
 ### egCss.js
 
 GJS example showing how to build Gtk javascript applications
