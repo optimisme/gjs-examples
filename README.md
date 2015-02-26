@@ -35,6 +35,7 @@ setting the application icon from the 'assets' folder and if
 not available from the 'stock icons'
 
 ![egIcon1](https://raw.github.com/optimisme/gjs-examples/master/captures/egIcon1.png)
+![egIcon2](https://raw.github.com/optimisme/gjs-examples/master/captures/egIcon2.png)
 
 ### egCss.js
 
