@@ -128,7 +128,7 @@ App.prototype.write = function() {
         text = JSON.stringify(this.info);
 
         file = Gio.File.new_for_path(path + '/assets/egJSON.json');
-        file.replace_async(null, true, 
+        file.replace_async(null, false, 
             Gio.FileCreateFlags.REPLACE_DESTINATION,
             GLib.PRIORITY_LOW, null, Lang.bind(this, function(file, res) {
 
