@@ -1,5 +1,5 @@
 # gjs-examples
-GJS examples showing how to build Gtk javascript applications
+GJS examples showing how to build Gtk javascript applications (for Gnome).
 
 ### Run
 
@@ -74,6 +74,16 @@ GJS example showing how to build Gtk javascript applications
 getting information from GLib and command line
 
 ![egInfo1](https://raw.github.com/optimisme/gjs-examples/master/captures/egInfo1.png)
+
+### egDialog.js
+
+GJS example showing how to build Gtk javascript applications
+adding an option to the application's Gio.Menu and opening 
+dialog and modal windows using Gtk.Dialog
+
+![egDialog1](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog1.png)
+![egDialog2](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog2.png)
+![egDialog3](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog3.png)
 
 ### egSpawn.js
 
