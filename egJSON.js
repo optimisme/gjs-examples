@@ -136,6 +136,7 @@ App.prototype.write = function() {
                 if (!res.had_error()) {
                     stream = file.replace_finish(res);
                     stream.write(text, null);
+                    // Write more data with stream.write ...
                     stream.close(null);
                 }
         }));
