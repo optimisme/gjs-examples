@@ -83,7 +83,7 @@ App.prototype.buildUI = function() {
                                               default_width: 400,
                                               window_position: Gtk.WindowPosition.CENTER });
     try {
-        this.info.icon = '/assets/app-icon.png';
+        this.info.icon = '/assets/appIcon.png';
         this.window.set_icon_from_file(path + this.info.icon);
     } catch (err) {
         this.info.icon = 'application-x-executable';
