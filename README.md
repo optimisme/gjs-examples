@@ -143,6 +143,15 @@ mode
 ![egSelect1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSelect1.png)
 ![egSelect2](https://raw.github.com/optimisme/gjs-examples/master/captures/egSelect2.png)
 
+### egClutter.js
+
+GJS example showing how to build Gtk javascript applications
+using Gtk and Clutter, showing how to drag actors with
+Clutter.DragAction, perform animations with Glutter.Transition
+and control the actor from Gtk.Scale
+
+![egClutter1](https://raw.github.com/optimisme/gjs-examples/master/captures/egClutter1.png)
+
 ### egWebmsg.js
 
 GJS example showing how to build Gtk javascript applications
