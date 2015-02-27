@@ -33,6 +33,9 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
+// Import spawn library
+const Spawn = imports.assets.spawn;
+
 const App = function () { 
 
     this.title = 'Example Spawn';
@@ -85,30 +88,20 @@ App.prototype.buildUI = function() {
 };
 
 App.prototype.spawn = function() {
-   
-    let pid, stdin, stdout, stderr, stream;
 
-    [res, pid, stdin, stdout, stderr] = GLib.spawn_async_with_pipes(
-        './', ['ls', '-ltr', '.'], null, GLib.SpawnFlags.SEARCH_PATH, null);
-        //'./', ['tail', '-f', 'a.txt'], null, GLib.SpawnFlags.SEARCH_PATH, null);
+    let reader;
 
-    stream = new Gio.DataInputStream({ base_stream : new Gio.UnixInputStream({ fd : stdout }) });
-    this.read(stream);
-}; 
-
-App.prototype.read = function (stream) {
-
-    stream.read_line_async(GLib.PRIORITY_LOW, null, Lang.bind (this, function (source, res) {
-
-        let out, length;
-
-        [out, length] = source.read_line_finish(res);
-        if (out !== null) {
-            this.buffer.insert_at_cursor(String(out) + '\n', -1);
-            this.read(source);
-        }
+    reader = new Spawn.SpawnReader();
+    reader.spawn('./', ['ls', '-ltr', '.'], Lang.bind (this, function (line) {
+        this.buffer.insert_at_cursor(String(line) + '\n', -1);
     }));
-};
+
+/*  // Example of 'continuous' read with 'tail':
+    reader.spawn('./', ['tail', '-f', 'a.txt'], Lang.bind (this, function (line) {
+        this.buffer.insert_at_cursor(String(line) + '\n', -1);
+    }));
+*/
+}; 
 
 //Run the application
 let app = new App();

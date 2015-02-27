@@ -90,10 +90,9 @@ App.prototype.getBody = function() {
     label2.get_style_context().add_provider(css2, 0);
     label2.set_size_request(150, 35);
     
-    content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-    content.set_spacing(10);
-    content.add(label1);
-    content.add(label2);
+    content = new Gtk.Grid({ halign: Gtk.Align.CENTER, column_spacing: 10, margin: 15, row_spacing: 10 });
+    content.attach(label1, 0, 0, 1, 1);
+    content.attach(label2, 0, 1, 1, 1);
 
     return content;
 };

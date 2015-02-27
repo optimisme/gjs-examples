@@ -88,8 +88,7 @@ App.prototype.getHeader = function () {
     this.headerBar = new Gtk.HeaderBar();
     this.headerBar.set_show_close_button(true);
 
-    headerEnd = new Gtk.Grid();
-    headerEnd.set_column_spacing(this.headerBar.spacing);
+    headerEnd = new Gtk.Grid({ column_spacing: this.headerBar.spacing });
 
     imageSearch = new Gtk.Image ({ icon_name: 'edit-find-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     this.buttonSearch = new Gtk.ToggleButton({ image: imageSearch });
@@ -118,24 +117,21 @@ App.prototype.getHeader = function () {
 
 App.prototype.getBody = function () {
 
-    this.content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-    this.content.add(this.getSearch());
-    this.content.add(this.getFlow());
-    this.content.add(this.getActionBar());
+    this.content = new Gtk.Grid();
+    this.content.attach(this.getSearch(), 0, 0, 1, 1);
+    this.content.attach(this.getFlow(), 0, 1, 1, 1);
+    this.content.attach(this.getActionBar(), 0, 2, 1, 1);
 
     return this.content;
 };
 
 App.prototype.getSearch = function () {
     
-    let searchBox, searchEntry;
+    let searchEntry;
 
     this.searchBar = new Gtk.SearchBar();
     this.searchBar.show();
-    searchBox = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, halign: Gtk.Align.CENTER });
-    searchBox.show();
     searchEntry = new Gtk.SearchEntry();
-    searchBox.add(searchEntry);
     searchEntry.show();
 
     searchEntry.connect('search-changed', Lang.bind (this, function () {
@@ -161,7 +157,7 @@ App.prototype.getSearch = function () {
         }
     }));
     this.searchBar.connect_entry(searchEntry);
-    this.searchBar.add(searchBox);
+    this.searchBar.add(searchEntry);
 
     return this.searchBar;
 };

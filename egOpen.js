@@ -92,18 +92,18 @@ App.prototype.getBody = function () {
 
     let content, scroll, view, label;
 
-    content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-    scroll = new Gtk.ScrolledWindow({ vexpand: true });
+    content = new Gtk.Grid();
+    scroll = new Gtk.ScrolledWindow({ hexpand: true, vexpand: true });
     this.buffer = new Gtk.TextBuffer();
     view = new Gtk.TextView();
     view.set_buffer(this.buffer);
 
     scroll.add(view);
 
-    this.label = new Gtk.Label({ label: 'Open a file...' });
+    this.label = new Gtk.Label({ halign: Gtk.Align.START, label: 'Open a file...' });
 
-    content.add(scroll);
-    content.add(this.label);
+    content.attach(scroll, 0, 0, 1, 1);
+    content.attach(this.label, 0, 1, 1, 1);
 
     return content;
 };
@@ -189,7 +189,7 @@ App.prototype.openFile = function(name) {
             contents = file.load_contents_finish(res)[1];
             this.buffer.delete(this.buffer.get_iter_at_offset(0),
                                this.buffer.get_iter_at_offset(this.buffer.get_char_count()));
-            this.buffer.insert_at_cursor(contents + '\n', -1);
+            this.buffer.insert_at_cursor(contents.toString() + '\n', -1);
         } catch (e) {
             return;
         }

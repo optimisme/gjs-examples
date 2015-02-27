@@ -31,6 +31,9 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
+// Import spawn library
+const Spawn = imports.assets.spawn;
+
 const App = function () { 
 
     this.title = 'Example Info';
@@ -46,6 +49,7 @@ const App = function () {
         program: '',
         script: '',
         folder: '',
+        current: '',
         icon: '',
         dstr: '',
         kernel: ''
@@ -86,13 +90,15 @@ App.prototype.buildUI = function() {
         this.window.set_icon_name(this.info.icon);
     }
 
-    this.label = new Gtk.Label({ label: '' });
+    this.label = new Gtk.Label({ label: '', margin: 15 });
     this.window.add(this.label);
 };
 
 App.prototype.getInfo = function() {
     
-    let file = getAppFileInfo();
+    let file, reader1, reader2;
+
+    file = getAppFileInfo();
 
     this.info.desktop = GLib.getenv('XDG_CURRENT_DESKTOP');
     this.info.host = GLib.get_host_name();
@@ -103,28 +109,20 @@ App.prototype.getInfo = function() {
     this.info.program = GLib.get_prgname();
     this.info.script = file[2];
     this.info.folder = file[1];
-
-    try {
-        let [res, out] = GLib.spawn_command_line_sync('lsb_release -d');
-        if (res) {
-            this.info.dstr = out.toString().split('\n')[0].split(':\t')[1];
-        }
-    } catch ( e ) {
-        this.info.dstr = 'Unknown';
-        throw e;
-    }
-
-    try {
-        let [res, out] = GLib.spawn_command_line_sync('uname -r');
-        if (res) {
-            this.info.kernel = out.toString();
-        }
-    } catch ( e ) {
-        this.info.kernel = 'Unknown';
-        throw e;
-    }
-
+    this.info.current = GLib.get_current_dir();
     this.setLabel();
+    
+    reader1 = new Spawn.SpawnReader();
+    reader1.spawn('./', ['lsb_release', '-d'], Lang.bind (this, function (line) {
+        this.info.dstr = line.toString().split('\n')[0].split(':\t')[1];
+        this.setLabel();
+    }));
+
+    reader2 = new Spawn.SpawnReader();
+    reader2.spawn('./', ['uname', '-r'], Lang.bind (this, function (line) {
+        this.info.kernel = line.toString();
+        this.setLabel();
+    }));
 };
 
 
@@ -143,6 +141,7 @@ App.prototype.setLabel = function() {
     if (this.info.program !== '')   text = text + '\nProgram: ' + this.info.program;
     if (this.info.script !== '')    text = text + '\nScript: ' + this.info.script;
     if (this.info.folder !== '')    text = text + '\nFolder: ' + this.info.folder;
+    if (this.info.current !== '')   text = text + '\nCurrent: ' + this.info.current;
     if (this.info.icon !== '')      text = text + '\nIcon: ' + this.info.icon;
     text = text + '\n';
     if (this.info.dstr !== '')      text = text + '\nDistro: ' + this.info.dstr;

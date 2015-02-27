@@ -33,21 +33,25 @@ function getAppFileInfo() {
 const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
-const PopWidget = function (label, widget) {
+const PopWidget = function (properties) {
 
     let image = new Gtk.Image ({ icon_name: 'pan-down-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
 
     this.pop = new Gtk.Popover();
-    this.button = new Gtk.ToggleButton({ label: label });
+    this.button = new Gtk.ToggleButton({ label: properties.label });
     this.button.set_image(image);
     this.button.set_always_show_image(true);
     this.button.set_image_position(Gtk.PositionType.RIGHT);
-    this.button.connect ('clicked', Lang.bind (this, function () { if (this.button.get_active()) { this.pop.show_all(); }}));
-    this.pop.connect ('closed', Lang.bind (this, function () { if (this.button.get_active()) { this.button.set_active(false); }}));
+    this.button.connect ('clicked', Lang.bind (this, function () { 
+        if (this.button.get_active()) { this.pop.show_all(); }
+    }));
+    this.pop.connect ('closed', Lang.bind (this, function () { 
+        if (this.button.get_active()) { this.button.set_active(false); }
+    }));
     this.pop.set_relative_to(this.button);
     this.pop.set_size_request(-1, -1);
     this.pop.set_border_width(8);
-    this.pop.add(widget);
+    this.pop.add(properties.widget);
 };
 
 const App = function () { 
@@ -96,14 +100,13 @@ App.prototype.getHeader = function () {
     let headerBar, headerStart, imageNew, buttonNew, popMenu, imageMenu, buttonMenu;
 
     headerBar = new Gtk.HeaderBar();
-    headerBar.set_title("Window Title");
+    headerBar.set_title(this.title);
     headerBar.set_subtitle("Some subtitle text here");
     headerBar.set_show_close_button(true);
 
-    headerStart = new Gtk.Grid();
-    headerStart.set_column_spacing(headerBar.spacing);
+    headerStart = new Gtk.Grid({ column_spacing: headerBar.spacing });
 
-    this.widgetOpen = new PopWidget("Open", this.getPopOpen());
+    this.widgetOpen = new PopWidget({ label: "Open", widget: this.getPopOpen() });
 
     imageNew = new Gtk.Image ({ icon_name: 'tab-new-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     buttonNew = new Gtk.Button({ image: imageNew });

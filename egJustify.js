@@ -80,8 +80,7 @@ App.prototype.getBody = function() {
     right = this.getLabel(Gtk.Justification.RIGHT);
     justify  = this.getLabel(Gtk.Justification.FILL);
 
-    grid = new Gtk.Grid();
-    grid.set_column_spacing(25);
+    grid = new Gtk.Grid({ column_spacing: 25 });
     grid.set_border_width(15);
     grid.attach(left, 0, 0, 1, 1);
     grid.attach(center, 1, 0, 1, 1);

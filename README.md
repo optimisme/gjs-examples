@@ -91,6 +91,14 @@ using Gtk TreeView and ListStore
 
 ![egList1](https://raw.github.com/optimisme/gjs-examples/master/captures/egList1.png)
 
+### egJSON.js
+
+GJS example showing how to build Gtk javascript applications
+reading and writting JSON files, the example makes use of
+Gio.File.new_for_path, replace_async, load_contents_async
+
+![egJSON1](https://raw.github.com/optimisme/gjs-examples/master/captures/egJSON1.png)
+
 ### egOpen.js
 
 GJS example showing how to build Gtk javascript applications

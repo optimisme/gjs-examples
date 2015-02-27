@@ -3,12 +3,12 @@ const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
 const Pango = imports.gi.Pango;
 
-const SelectItem = function (id, image, text) {
+const SelectItem = function (properties) {
 
-    this.id = id;
+    this.id = properties.id;
     this.selectingMode = true;
-    this.text = text;
-    this.widget = this.getWidget(image, text);
+    this.text = properties.text;
+    this.widget = this.getWidget(properties.image, properties.text);
     this.signals = { };
 };
 
@@ -106,7 +106,7 @@ SelectFlow.prototype.getWidget = function() {
 SelectFlow.prototype.insert = function(image, text) {
 
     this.counter = this.counter + 1;
-    this.pointers[this.counter] = new SelectItem(this.counter, image, text);
+    this.pointers[this.counter] = new SelectItem({ id: this.counter, image: image, text: text });
     this.pointers[this.counter].connect('selection-changed', Lang.bind (this, function (id, active) {
 
         let pos;

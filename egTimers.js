@@ -86,9 +86,7 @@ App.prototype.getBody = function() {
 
     let grid, buttonST, buttonCT, buttonSI, buttonCI;
 
-    grid = new Gtk.Grid();
-    grid.set_column_spacing(6);
-    grid.set_row_spacing(6);
+    grid = new Gtk.Grid({ column_spacing: 6, row_spacing: 6 });
     grid.set_border_width(8);
 
     buttonST = new Gtk.Button({ label: "setTimeout" });

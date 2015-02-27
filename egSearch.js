@@ -98,23 +98,20 @@ App.prototype.getHeader = function () {
 
 App.prototype.getBody = function () {
 
-    this.content = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
-    this.content.add(this.getSearch());
-    this.content.add(this.getFlow());
+    this.content = new Gtk.Grid();
+    this.content.attach(this.getSearch(), 0, 0, 1, 1);
+    this.content.attach(this.getFlow(), 0, 1, 1, 1);
 
     return this.content;
 };
 
 App.prototype.getSearch = function () {
     
-    let searchBox, searchEntry;
+    let searchEntry;
 
     this.searchBar = new Gtk.SearchBar();
     this.searchBar.show();
-    searchBox = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, halign: Gtk.Align.CENTER });
-    searchBox.show();
     searchEntry = new Gtk.SearchEntry();
-    searchBox.add(searchEntry);
     searchEntry.show();
 
     searchEntry.connect('search-changed', Lang.bind (this, function () {
@@ -136,7 +133,7 @@ App.prototype.getSearch = function () {
         }
     }));
     this.searchBar.connect_entry(searchEntry);
-    this.searchBar.add(searchBox);
+    this.searchBar.add(searchEntry);
 
     return this.searchBar;
 };
