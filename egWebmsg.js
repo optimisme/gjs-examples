@@ -77,9 +77,8 @@ App.prototype.getBody = function() {
 
     let webView, button, label, grid;
 
-    webView = new Webkit.WebView();
+    webView = new Webkit.WebView({ vexpand: true });
     webView.load_uri(GLib.filename_to_uri (path + '/assets/egWebmsg.html', null));
-    webView.set_vexpand(true);
     webView.connect('status_bar_text_changed', Lang.bind(this, function (arg, txt) {
         // Get Webkit messages into GTK listening to 'status bar/window.status' signals
         label.label = txt;
