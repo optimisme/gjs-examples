@@ -3,8 +3,8 @@
 /*
 GJS example showing how to build Gtk javascript applications
 using Gtk and Clutter, showing how to drag actors with
-Clutter.DragAction, perform animations with Glutter.Transition
-and control the actor from Gtk.Scale
+Clutter.DragAction, perform animations with PropertyTransition,
+TransitionGroup and control the actor from Gtk.Scale
 
 Run it with:
     gjs egAsset.js
