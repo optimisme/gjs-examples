@@ -7,7 +7,7 @@ Clutter.DragAction, perform animations with PropertyTransition,
 TransitionGroup and control the actor from Gtk.Scale
 
 Run it with:
-    gjs egAsset.js
+    gjs egCairo.js
 */
 
 const Gdk           = imports.gi.Gdk;
@@ -83,10 +83,10 @@ App.prototype.buildUI = function() {
 
 App.prototype.buildBody = function() {
 
-    let grid, embed, titleRotate, scale, buttonStart, buttonStop;
+    let embed, grid, titleRotate, scale, buttonStart, buttonStop;
 
     embed = new GtkClutter.Embed();
-    embed.set_size_request(320, 240);
+    embed.set_size_request(400, 240);
 
     this.position = new Gtk.Label({ label: 'Drag the square' });
     this.position.set_size_request(300, -1);
@@ -176,13 +176,15 @@ App.prototype.getActor = function() {
     action.connect('drag-motion', Lang.bind(this, function(action, actor, x, y, modifiers) {
         this.position.set_text('X: ' + x.toFixed(2) + ', Y: ' + y.toFixed(2) + ' - D');
     }));
-    /* Simple actor example:
+    /* 
+    // Simple actor example:
     this.actor = new Clutter.Actor({
         background_color: colorDark,
         x: 150, y: 150,
         height: 100, width: 100
     });
     */
+    // Textured actor example
     this.actor = new Clutter.Texture({
         background_color: colorDark,
         filename: path + '/assets/egClutter.png',

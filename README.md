@@ -1,5 +1,5 @@
 # gjs-examples
-GJS examples showing how to build Gtk javascript applications (for Gnome).
+GJS examples showing how to build Gtk javascript applications (Gnome).
 
 ### Run
 
