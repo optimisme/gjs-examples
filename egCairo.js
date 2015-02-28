@@ -163,8 +163,8 @@ App.prototype.draw = function(ctx, height, width, color) {
         // Set black background for 'red'
         ctx.setSourceRGBA(0, 0, 0, 1);
     } else {
-        // Set white background
-        ctx.setSourceRGBA(1, 1, 1, 1);
+        // Set grey background
+        ctx.setSourceRGBA(0.75, 0.75, 0.75, 1);
     }
     ctx.paint();
     ctx.restore();
