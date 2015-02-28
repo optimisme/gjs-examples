@@ -68,6 +68,15 @@ have their own window
 
 ![egEvent1](https://raw.github.com/optimisme/gjs-examples/master/captures/egEvent1.png)
 
+### egSpawn.js
+
+GJS example showing how to build Gtk javascript applications
+executing a non blocking command line call, it uses
+TextBuffer, TextView, GLib.spawn_async_with_pipes,
+Gio.UnixInputStream, Gio.DataInputStream and read_line_async
+
+![egSpawn1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSpawn1.png)
+
 ### egInfo.js
 
 GJS example showing how to build Gtk javascript applications
@@ -84,15 +93,6 @@ dialog and modal windows using Gtk.Dialog
 ![egDialog1](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog1.png)
 ![egDialog2](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog2.png)
 ![egDialog3](https://raw.github.com/optimisme/gjs-examples/master/captures/egDialog3.png)
-
-### egSpawn.js
-
-GJS example showing how to build Gtk javascript applications
-executing a non blocking command line call, it uses
-TextBuffer, TextView, GLib.spawn_async_with_pipes,
-Gio.UnixInputStream, Gio.DataInputStream and read_line_async
-
-![egSpawn1](https://raw.github.com/optimisme/gjs-examples/master/captures/egSpawn1.png)
 
 ### egList.js
 
