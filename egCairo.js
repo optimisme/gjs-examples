@@ -4,6 +4,8 @@
 GJS example showing how to build Gtk javascript applications
 using Gtk and Cairo, the left example adds one Cairo actor to
 Clutter, the example on the right adds one Cairo widget to GTK
+using GtkClutter.Embed, Gtk.DrawingArea, Cairo.Context,
+Clutter.Canvas
 
 Run it with:
     gjs egCairo.js
