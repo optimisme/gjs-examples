@@ -152,6 +152,14 @@ TransitionGroup and control the actor from Gtk.Scale
 
 ![egClutter1](https://raw.github.com/optimisme/gjs-examples/master/captures/egClutter1.png)
 
+### egCairo.js
+
+GJS example showing how to build Gtk javascript applications
+using Gtk and Cairo, the left example adds one Cairo actor to
+Clutter, the example on the right adds one Cairo widget to GTK
+
+![egCario1](https://raw.github.com/optimisme/gjs-examples/master/captures/egCairo1.png)
+
 ### egWebmsg.js
 
 GJS example showing how to build Gtk javascript applications

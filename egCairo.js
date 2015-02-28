@@ -68,8 +68,8 @@ App.prototype.buildUI = function() {
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
                                               title: this.title,
-                                              default_height: 500,
-                                              default_width: 700,
+                                              default_height: 300,
+                                              default_width: 500,
                                               window_position: Gtk.WindowPosition.CENTER });
     try {
         this.window.set_icon_from_file(path + '/assets/appIcon.png');
@@ -85,10 +85,10 @@ App.prototype.buildBody = function() {
     let grid, embed, area, actor, widget, stage;
 
     embed = new GtkClutter.Embed();
-    embed.set_size_request(400, 500);
+    embed.set_size_request(250, 300);
 
     area = new Gtk.DrawingArea();
-    area.set_size_request(300, 500);
+    area.set_size_request(250, 300);
     area.connect('draw', Lang.bind(this, this.drawRed));
     
     grid = new Gtk.Grid({ column_spacing: 6, margin: 15, row_spacing: 6 });
@@ -115,7 +115,7 @@ App.prototype.getClutterActor = function() {
     canvas.invalidate();
 
     actor = new Clutter.Actor({
-        x: 150, y: 150,
+        x: 75, y: 100,
         height: 100, width: 100
     });
     actor.set_content(canvas);
