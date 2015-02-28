@@ -88,7 +88,7 @@ App.prototype.buildBody = function() {
     embed = new GtkClutter.Embed();
     embed.set_size_request(320, 240);
 
-    this.position = new Gtk.Label({ label: 'Drag the grey square' });
+    this.position = new Gtk.Label({ label: 'Drag the square' });
     this.position.set_size_request(300, -1);
 
     titleRotate = new Gtk.Label({ label: 'Rotation: ' });
