@@ -35,13 +35,15 @@ imports.searchPath.push(path);
 
 const PopWidget = function (properties) {
 
+    let label = new Gtk.Label({ label: properties.label });
     let image = new Gtk.Image ({ icon_name: 'pan-down-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
+    let widget = new Gtk.Grid();
+    widget.attach(label, 0, 0, 1, 1);
+    widget.attach(image, 1, 0, 1, 1);
 
     this.pop = new Gtk.Popover();
-    this.button = new Gtk.ToggleButton({ label: properties.label });
-    this.button.set_image(image);
-    this.button.set_always_show_image(true);
-    this.button.set_image_position(Gtk.PositionType.RIGHT);
+    this.button = new Gtk.ToggleButton();
+    this.button.add(widget);
     this.button.connect ('clicked', Lang.bind (this, function () { 
         if (this.button.get_active()) { this.pop.show_all(); }
     }));

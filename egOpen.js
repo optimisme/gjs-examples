@@ -130,8 +130,8 @@ App.prototype.openDialog = function() {
     chooser.set_current_folder(path);
 
     // Add the buttons and its return values
-    chooser.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
-    chooser.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK);
+    chooser.add_button('Cancel', Gtk.ResponseType.CANCEL);
+    chooser.add_button('OK', Gtk.ResponseType.OK);
 
     // This is to add the 'combo' filtering options
     store = new Gtk.ListStore();

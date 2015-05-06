@@ -172,7 +172,7 @@ App.prototype.showModal = function() {
     contentArea = modal.get_content_area();
     contentArea.add(label);
 
-    button = Gtk.Button.new_from_stock (Gtk.STOCK_OK);
+    button = Gtk.Button.new_with_label ('OK');
     button.connect ("clicked", Lang.bind (this, function() {
         print('OK pressed');
         modal.destroy();
