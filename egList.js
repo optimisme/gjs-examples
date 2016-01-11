@@ -33,7 +33,6 @@ const path = getAppFileInfo()[1];
 imports.searchPath.push(path);
 
 const App = function () { 
-
     this.title = 'Example List';
     GLib.set_prgname(this.title);
 };
@@ -41,8 +40,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -101,11 +100,11 @@ App.prototype.getBody = function () {
 
     let text1 = new Gtk.CellRendererText();
     col.pack_start(text1, true);
-    col.set_cell_data_func(text1, Lang.bind(this, this.cellFuncText1));
+    col.set_cell_data_func(text1, (col, cell, model, iter) => { this.cellFuncText1(col, cell, model, iter); });
 
     let text2 = new Gtk.CellRendererText();
     col.pack_start(text2, true);
-    col.set_cell_data_func(text2, Lang.bind(this, this.cellFuncText2));
+    col.set_cell_data_func(text2, (col, cell, model, iter) => { this.cellFuncText2(col, cell, model, iter); });
 
     return scroll;
 };

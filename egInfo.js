@@ -59,8 +59,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -113,16 +113,16 @@ App.prototype.getInfo = function() {
     this.setLabel();
     
     reader1 = new Spawn.SpawnReader();
-    reader1.spawn('./', ['lsb_release', '-d'], Lang.bind (this, function (line) {
+    reader1.spawn('./', ['lsb_release', '-d'], (line) => {
         this.info.dstr = line.toString().split('\n')[0].split(':\t')[1];
         this.setLabel();
-    }));
+    });
 
     reader2 = new Spawn.SpawnReader();
-    reader2.spawn('./', ['uname', '-r'], Lang.bind (this, function (line) {
+    reader2.spawn('./', ['uname', '-r'], (line) => {
         this.info.kernel = line.toString();
         this.setLabel();
-    }));
+    });
 };
 
 

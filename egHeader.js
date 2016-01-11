@@ -44,12 +44,12 @@ const PopWidget = function (properties) {
     this.pop = new Gtk.Popover();
     this.button = new Gtk.ToggleButton();
     this.button.add(widget);
-    this.button.connect ('clicked', Lang.bind (this, function () { 
+    this.button.connect ('clicked', () => { 
         if (this.button.get_active()) { this.pop.show_all(); }
-    }));
-    this.pop.connect ('closed', Lang.bind (this, function () { 
+    });
+    this.pop.connect ('closed', () => { 
         if (this.button.get_active()) { this.button.set_active(false); }
-    }));
+    });
     this.pop.set_relative_to(this.button);
     this.pop.set_size_request(-1, -1);
     this.pop.set_border_width(8);
@@ -64,8 +64,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -112,7 +112,7 @@ App.prototype.getHeader = function () {
 
     imageNew = new Gtk.Image ({ icon_name: 'tab-new-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     buttonNew = new Gtk.Button({ image: imageNew });
-    buttonNew.connect ('clicked', Lang.bind (this, function () { this.printText('Button new'); }));
+    buttonNew.connect ('clicked', () => { this.printText('Button new'); });
 
     headerStart.attach(this.widgetOpen.button, 0, 0, 1, 1);
     headerStart.attach(buttonNew, 1, 0, 1, 1);
@@ -136,10 +136,10 @@ App.prototype.getPopOpen = function () { /* Widget popover */
         label = new Gtk.Label({ label: "Label 1" }),
         button = new Gtk.Button({ label: "Other Documents ..." });
 
-    button.connect ('clicked', Lang.bind (this, function () { 
+    button.connect ('clicked', () => { 
         this.widgetOpen.pop.hide();
         this.printText('Open other documents');
-    }));
+    });
     button.set_size_request(200, -1);
 
     widget.attach(label, 0, 0, 1, 1);
@@ -178,36 +178,31 @@ App.prototype.getMenu = function () { /* GMenu popover */
 
     // Set menu actions
     let actionSaveAs = new Gio.SimpleAction ({ name: 'saveAs' });
-        actionSaveAs.connect('activate', Lang.bind(this,
-            function() {
+        actionSaveAs.connect('activate', () => {
                 this.printText('Action save as');
-            }));
+            });
         this.application.add_action(actionSaveAs);
 
     let actionSaveAll = new Gio.SimpleAction ({ name: 'saveAll' });
-        actionSaveAll.connect('activate', Lang.bind(this,
-            function() {
+        actionSaveAll.connect('activate', () => {
                 this.printText('Action save all');
-            }));
+            });
         this.application.add_action(actionSaveAll);
 
     let actionClose1 = new Gio.SimpleAction ({ name: 'close1' });
-        actionClose1.connect('activate', Lang.bind(this,
-            function() {
+        actionClose1.connect('activate', () => {
                 this.printText('Action close all');
-            }));
+            });
         this.application.add_action(actionClose1);
 
     let actionClose2 = new Gio.SimpleAction ({ name: 'close2' });
-        actionClose2.connect('activate', Lang.bind(this,
-            function() {
+        actionClose2.connect('activate', () => {
                 this.printText('Action close');
-            }));
+            });
         this.application.add_action(actionClose2);
 
     let actionToggle = new Gio.SimpleAction ({ name: 'toggle', state: new GLib.Variant('b', true) });
-        actionToggle.connect('activate', Lang.bind(this,
-            function(action) {
+        actionToggle.connect('activate', (action) => {
                 let state = action.get_state().get_boolean();
                 if (state) {
                     action.set_state(new GLib.Variant('b', false));
@@ -215,13 +210,12 @@ App.prototype.getMenu = function () { /* GMenu popover */
                     action.set_state(new GLib.Variant('b', true));
                 }
                 this.printText('View ' + state);
-            }));
+            });
         this.application.add_action(actionToggle);
 
     let variant = new GLib.Variant('s', 'one');
     let actionSelect = new Gio.SimpleAction ({ name: 'select', state: variant, parameter_type: variant.get_type() });
-        actionSelect.connect('activate', Lang.bind(this,
-            function(action, parameter) {
+        actionSelect.connect('activate', (action, parameter) => {
                 let str = parameter.get_string()[0];
                 if (str === 'one') {
                     action.set_state(new GLib.Variant('s', 'one'));
@@ -233,7 +227,7 @@ App.prototype.getMenu = function () { /* GMenu popover */
                     action.set_state(new GLib.Variant('s', 'thr'));
                 }
                 this.printText('Selection ' + str);
-            }));
+            });
         this.application.add_action(actionSelect);
 
     return menu;

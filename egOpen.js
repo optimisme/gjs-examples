@@ -42,8 +42,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -82,7 +82,7 @@ App.prototype.getHeader = function () {
     headerBar.set_show_close_button(true);
 
     button = new Gtk.Button({ label: 'Open' });
-    button.connect ('clicked', Lang.bind (this, this.openDialog));
+    button.connect ('clicked', () => { this.openDialog(); });
 
     headerBar.pack_start(button);
     return headerBar;
@@ -145,7 +145,7 @@ App.prototype.openDialog = function() {
     combo.pack_start(renderer, false);
     combo.add_attribute(renderer, "text", 1);
     combo.set_active(0);
-    combo.connect ('changed', Lang.bind (this, function (widget) {
+    combo.connect ('changed', (widget) => {
 
         let model, active, type, text, filter; 
 
@@ -164,7 +164,7 @@ App.prototype.openDialog = function() {
         }
 
         chooser.set_filter(filter);
-    }));
+    });
     chooser.set_extra_widget(combo);
 
     // Run the dialog
@@ -183,7 +183,7 @@ App.prototype.openFile = function(name) {
 
     file = Gio.File.new_for_path(name);
 
-    file.load_contents_async(null, Lang.bind(this, function(file, res) {
+    file.load_contents_async(null, (file, res) => {
         let contents;
         try {
             contents = file.load_contents_finish(res)[1];
@@ -193,11 +193,11 @@ App.prototype.openFile = function(name) {
         } catch (e) {
             return;
         }
-    }));
+    });
 
     file.query_info_async('standard::type,standard::size',
         Gio.FileQueryInfoFlags.NONE, GLib.PRIORITY_LOW, null,
-        Lang.bind(this, function(source, async) {
+        (source, async) => {
 
             let info, type, size, text;
 
@@ -207,7 +207,7 @@ App.prototype.openFile = function(name) {
 
             text = 'File info type: ' + type + ', size: ' + size;
             this.label.set_text(text);
-        }));
+        });
 };
 
 //Run the application

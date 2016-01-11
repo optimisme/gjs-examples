@@ -39,8 +39,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 

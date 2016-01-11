@@ -3,7 +3,6 @@
 /*
 GJS example showing how to build Gtk javascript applications
 using Gtk HeaderBar, SearchBar and a filtered FlowBox
-
 Run it with:
     gjs egSearchjs
 */
@@ -43,8 +42,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -83,13 +82,13 @@ App.prototype.getHeader = function () {
 
     imageSearch = new Gtk.Image ({ icon_name: 'edit-find-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     this.buttonSearch = new Gtk.ToggleButton({ image: imageSearch });
-    this.buttonSearch.connect ('clicked', Lang.bind (this, function () { 
+    this.buttonSearch.connect ('clicked', () => { 
         if (this.buttonSearch.get_active()) {
             this.searchBar.set_search_mode(true);
         } else {
             this.searchBar.set_search_mode(false);
         }
-    }));
+    });
 
     this.headerBar.pack_end(this.buttonSearch);
 
@@ -114,11 +113,11 @@ App.prototype.getSearch = function () {
     searchEntry = new Gtk.SearchEntry();
     searchEntry.show();
 
-    searchEntry.connect('search-changed', Lang.bind (this, function () {
+    searchEntry.connect('search-changed', () => {
         this.filterText = searchEntry.get_text();
         this.flow.invalidate_filter();
-    }));
-    this.window.connect('key-press-event', Lang.bind (this, function (widget, event) {
+    });
+    this.window.connect('key-press-event', (widget, event) => {
         let key = event.get_keyval()[1];
         if (key !== Gdk.KEY_Escape
             && key !== Gdk.KEY_Up
@@ -131,7 +130,7 @@ App.prototype.getSearch = function () {
         } else {
             this.buttonSearch.set_active(false);
         }
-    }));
+    });
     this.searchBar.connect_entry(searchEntry);
     this.searchBar.add(searchEntry);
 
@@ -144,7 +143,7 @@ App.prototype.getFlow = function () {
 
     scroll = new Gtk.ScrolledWindow({ vexpand: true });
     this.flow = new Gtk.FlowBox({ vexpand: true });
-    this.flow.set_filter_func(Lang.bind (this, this.filter));
+    this.flow.set_filter_func((item) => { return this.filter(item); });
 
     this.flow.insert(this.newFlowLabel('1a lorem'), -1);
     this.flow.insert(this.newFlowLabel('2b ipsum'), -1);

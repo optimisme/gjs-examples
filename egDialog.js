@@ -40,8 +40,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -74,17 +74,17 @@ App.prototype.initMenu = function() {
     menu.append_section(null, section);
 
     dialogAction = new Gio.SimpleAction ({ name: 'dialog' });
-    dialogAction.connect('activate', Lang.bind(this, this.showDialog));
+    dialogAction.connect('activate', () => { this.showDialog(); });
     this.application.add_action(dialogAction);
 
     modalAction = new Gio.SimpleAction ({ name: 'modal' });
-    modalAction.connect('activate', Lang.bind(this, this.showModal));
+    modalAction.connect('activate', () => { this.showModal(); });
     this.application.add_action(modalAction);
 
     quitAction = new Gio.SimpleAction ({ name: 'quit' });
-    quitAction.connect('activate', Lang.bind(this, function() {
+    quitAction.connect('activate', () => {
         this.window.destroy();
-    }));
+    });
     this.application.add_action(quitAction);
 
     this.application.set_app_menu(menu);
@@ -173,10 +173,10 @@ App.prototype.showModal = function() {
     contentArea.add(label);
 
     button = Gtk.Button.new_with_label ('OK');
-    button.connect ("clicked", Lang.bind (this, function() {
+    button.connect ("clicked", () => {
         print('OK pressed');
         modal.destroy();
-    }));
+    });
 
     actionArea = modal.get_action_area();
     actionArea.add(button);

@@ -47,8 +47,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -92,20 +92,20 @@ App.prototype.getHeader = function () {
 
     imageSearch = new Gtk.Image ({ icon_name: 'edit-find-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     this.buttonSearch = new Gtk.ToggleButton({ image: imageSearch });
-    this.buttonSearch.connect ('clicked', Lang.bind (this, function () { 
+    this.buttonSearch.connect ('clicked', () => { 
         if (this.buttonSearch.get_active()) {
             this.searchBar.set_search_mode(true);
         } else {
             this.searchBar.set_search_mode(false);
         }
-    }));
+    });
 
     imageSelect = new Gtk.Image ({ icon_name: 'emblem-ok-symbolic', icon_size: Gtk.IconSize.SMALL_TOOLBAR });
     this.buttonSelect = new Gtk.Button({ image: imageSelect });
-    this.buttonSelect.connect ('clicked', Lang.bind (this, function () { this.selectionShow(true); }));
+    this.buttonSelect.connect ('clicked', () => { this.selectionShow(true); });
 
     this.buttonCancel = new Gtk.Button({ label: "Cancel" });
-    this.buttonCancel.connect ('clicked', Lang.bind (this, function () { this.selectionShow(false); }));
+    this.buttonCancel.connect ('clicked', () => { this.selectionShow(false); });
 
     headerEnd.attach(this.buttonSearch, 0, 0, 1, 1);
     headerEnd.attach(this.buttonSelect, 1, 0, 1, 1);
@@ -134,11 +134,11 @@ App.prototype.getSearch = function () {
     searchEntry = new Gtk.SearchEntry();
     searchEntry.show();
 
-    searchEntry.connect('search-changed', Lang.bind (this, function () {
+    searchEntry.connect('search-changed', () => {
         this.flow.filterText = searchEntry.get_text();
         this.flow.widget.invalidate_filter();
-    }));
-    this.window.connect('key-press-event', Lang.bind (this, function (widget, event) {
+    });
+    this.window.connect('key-press-event', (widget, event) => {
         let key = event.get_keyval()[1];
         if (key !== Gdk.KEY_Escape
             && key !== Gdk.KEY_Up
@@ -155,7 +155,7 @@ App.prototype.getSearch = function () {
                 this.selectionShow(false);
             }
         }
-    }));
+    });
     this.searchBar.connect_entry(searchEntry);
     this.searchBar.add(searchEntry);
 
@@ -178,16 +178,16 @@ App.prototype.getFlow = function () {
     id = this.flow.insert(path + '/assets/egSelect.png', 'Label 7 adipiscing');
     id = this.flow.insert(path + '/assets/egSelect.png', 'Label 8 elit');
     id = this.flow.insert(path + '/assets/egSelect.png', 'Label 9 set');
-    this.flow.connect('selection-changed', Lang.bind (this, function () {
+    this.flow.connect('selection-changed', () => {
         if (this.flow.selected.length > 0) {
             this.buttonDelete.set_sensitive(true);
         } else {
             this.buttonDelete.set_sensitive(false);
         }
-    }));
-    this.flow.connect('action', Lang.bind (this, function (id) {
+    });
+    this.flow.connect('action', (id) => {
         this.printText('Do something for: ' + id);
-    }));
+    });
 
     scroll.add(this.flow.widget);
 
@@ -199,10 +199,10 @@ App.prototype.getActionBar = function () {
     this.actionBar = new Gtk.ActionBar();
 
     this.buttonDelete = new Gtk.Button({ label: "Delete", sensitive: false });
-    this.buttonDelete.connect ('clicked', Lang.bind (this, function() {
+    this.buttonDelete.connect ('clicked', () => {
         this.printText('Will delete: ' + JSON.stringify(this.flow.selected));
         this.flow.deleteSelected();
-    }));
+    });
     this.actionBar.pack_end(this.buttonDelete);
 
     return this.actionBar;

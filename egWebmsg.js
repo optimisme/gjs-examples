@@ -42,8 +42,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -79,17 +79,16 @@ App.prototype.getBody = function() {
 
     webView = new Webkit.WebView({ vexpand: true });
     webView.load_uri(GLib.filename_to_uri (path + '/assets/egWebmsg.html', null));
-    webView.connect('status_bar_text_changed', Lang.bind(this, function (arg, txt) {
+    webView.connect('status_bar_text_changed', (arg, txt) => {
         // Get Webkit messages into GTK listening to 'status bar/window.status' signals
         label.label = txt;
-    }));
+    });
 
     button = new Gtk.Button({ label: 'GTK to Webkit message' });
-    button.connect('clicked', Lang.bind(this,
-        function() {
+    button.connect('clicked', () => {
             // Execute one Webkit function to send a message from GTK to Webkit
             webView.execute_script('messageFromGTK("Message from GTK!");');
-        }));
+        });
 
     label = new Gtk.Label({ label: '' });
 

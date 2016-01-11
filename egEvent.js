@@ -44,8 +44,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -83,10 +83,10 @@ App.prototype.getBody = function() {
 
     event = new Gtk.EventBox();
     event.add(this.label);
-    event.connect('button-press-event',  Lang.bind(this, function() { 
+    event.connect('button-press-event',  () => { 
         this.counter = this.counter + 1;
         this.label.set_text(this.text + this.counter);
-    }));
+    });
 
     return event;
 };

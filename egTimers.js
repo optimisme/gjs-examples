@@ -49,8 +49,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -90,20 +90,20 @@ App.prototype.getBody = function() {
     grid.set_border_width(8);
 
     buttonST = new Gtk.Button({ label: "setTimeout" });
-    buttonST.connect ('clicked', Lang.bind (this, this.actionSetTimeout));
+    buttonST.connect ('clicked', () => { this.actionSetTimeout(); });
 
     this.buttonCT = new Gtk.Button({ label: "clearTimeout" });
-    this.buttonCT.connect ('clicked', Lang.bind (this, this.actionClearTimeout));
+    this.buttonCT.connect ('clicked', () => { this.actionClearTimeout(); });
     this.buttonCT.set_sensitive(false);
 
     this.labelS = new Gtk.Label({ label: "-" });
     this.labelS.set_size_request(200, -1);
 
     buttonSI = new Gtk.Button({ label: "setInterval" });
-    buttonSI.connect ('clicked', Lang.bind (this, this.actionSetInterval));
+    buttonSI.connect ('clicked', () => { this.actionSetInterval(); });
 
     this.buttonCI = new Gtk.Button({ label: "clearInterval" });
-    this.buttonCI.connect ('clicked', Lang.bind (this, this.actionClearInterval));
+    this.buttonCI.connect ('clicked', () => { this.actionClearInterval(); });
     this.buttonCI.set_sensitive(false);
 
     this.labelC = new Gtk.Label({ label: "-" });
@@ -123,12 +123,12 @@ App.prototype.actionSetTimeout = function () {
 
     this.buttonCT.set_sensitive(true);
     this.labelS.set_text('Wait 2s');
-    this.idTimeout = Timers.setTimeout(Lang.bind(this, function () {
+    this.idTimeout = Timers.setTimeout(() => {
 
         this.buttonCT.set_sensitive(false);
         this.labelS.set_text('Now');
 
-    }), 2000);
+    }, 2000);
 };
 
 App.prototype.actionClearTimeout = function () {
@@ -143,10 +143,10 @@ App.prototype.actionSetInterval = function () {
     this.buttonCI.set_sensitive(true);
     this.labelC.set_text('Wait');
     this.counter = 0;
-    this.idInterval = Timers.setInterval(Lang.bind(this, function () {
+    this.idInterval = Timers.setInterval(() => {
         this.counter = this.counter + 1;
         this.labelC.set_text(this.counter.toString());
-    }), 500);
+    }, 500);
 };
 
 App.prototype.actionClearInterval = function () {

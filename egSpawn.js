@@ -46,8 +46,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -92,14 +92,14 @@ App.prototype.spawn = function() {
     let reader;
 
     reader = new Spawn.SpawnReader();
-    reader.spawn('./', ['ls', '-ltr', '.'], Lang.bind (this, function (line) {
+    reader.spawn('./', ['ls', '-ltr', '.'], (line) => {
         this.buffer.insert_at_cursor(String(line) + '\n', -1);
-    }));
+    });
 
 /*  // Example of 'continuous' read with 'tail':
-    reader.spawn('./', ['tail', '-f', 'a.txt'], Lang.bind (this, function (line) {
+    reader.spawn('./', ['tail', '-f', 'a.txt'], (line) => {
         this.buffer.insert_at_cursor(String(line) + '\n', -1);
-    }));
+    });
 */
 }; 
 

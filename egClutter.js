@@ -44,8 +44,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate',() => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -101,12 +101,12 @@ App.prototype.buildBody = function() {
     });
     scale.set_range(-35, 35);
     scale.set_size_request(150, -1);
-    scale.connect('change-value', Lang.bind(this, function(widget) {
+    scale.connect('change-value', (widget) => {
         this.actor.set_rotation(Clutter.RotateAxis.Y_AXIS, widget.get_value(), 50, 0, 0);
-    }));
+    });
 
     buttonStart = new Gtk.Button({ label: 'Play' });
-    buttonStart.connect ('clicked', Lang.bind (this, function () {
+    buttonStart.connect ('clicked', () => {
 
         let tg, pt;
 
@@ -127,10 +127,10 @@ App.prototype.buildBody = function() {
         scale.set_sensitive(false);
         buttonStart.set_sensitive(false);
         buttonStop.set_sensitive(true);
-    }));
+    });
 
     buttonStop = new Gtk.Button({ label: 'Stop', sensitive: false });
-    buttonStop.connect ('clicked', Lang.bind (this, function () {
+    buttonStop.connect ('clicked', () => {
 
         this.actor.remove_transition('rotate_transition');
         this.actor.set_rotation_angle(Clutter.RotateAxis.Z_AXIS, 0);
@@ -138,7 +138,7 @@ App.prototype.buildBody = function() {
         scale.set_sensitive(true);
         buttonStart.set_sensitive(true);
         buttonStop.set_sensitive(false);
-    }));
+    });
 
     grid = new Gtk.Grid({ column_spacing: 6, margin: 15, row_spacing: 6 });
     grid.attach(embed, 0, 0, 1, 3);
@@ -167,15 +167,15 @@ App.prototype.getActor = function() {
         x_drag_threshold: 0,
         y_drag_threshold: 0
     });
-    action.connect('drag-begin', Lang.bind(this, function(action, actor, x, y, modifiers) {
+    action.connect('drag-begin', (action, actor, x, y, modifiers) => {
         this.position.set_text('X: ' + x.toFixed(2) + ', Y: ' + y.toFixed(2) + ' - S');
-    }));
-    action.connect('drag-end', Lang.bind(this, function(action, actor, x, y, modifiers) {
+    });
+    action.connect('drag-end', (action, actor, x, y, modifiers) => {
         this.position.set_text('X: ' + x.toFixed(2) + ', Y: ' + y.toFixed(2) + ' - E');
-    }));
-    action.connect('drag-motion', Lang.bind(this, function(action, actor, x, y, modifiers) {
+    });
+    action.connect('drag-motion', (action, actor, x, y, modifiers) => {
         this.position.set_text('X: ' + x.toFixed(2) + ', Y: ' + y.toFixed(2) + ' - D');
-    }));
+    });
     /* 
     // Simple actor example:
     this.actor = new Clutter.Actor({
@@ -194,13 +194,13 @@ App.prototype.getActor = function() {
         y: 150,
         width: 100
     });
-    this.actor.connect('enter-event', Lang.bind(this, function(actor, event) {
+    this.actor.connect('enter-event', (actor, event) => {
         actor.set_background_color(colorLight);
 
-    }));
-    this.actor.connect('leave-event', Lang.bind(this, function(actor, event) {
+    });
+    this.actor.connect('leave-event', (actor, event) => {
         actor.set_background_color(colorDark);
-    }));
+    });
     this.actor.add_action(action);
 
     

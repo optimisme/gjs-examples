@@ -45,8 +45,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -91,7 +91,7 @@ App.prototype.buildBody = function() {
 
     area = new Gtk.DrawingArea();
     area.set_size_request(250, 300);
-    area.connect('draw', Lang.bind(this, this.drawRed));
+    area.connect('draw', (area, ctx) => { this.drawRed(area, ctx); });
     
     grid = new Gtk.Grid({ column_spacing: 6, margin: 15, row_spacing: 6 });
     grid.attach(embed, 0, 0, 1, 1);
@@ -113,7 +113,7 @@ App.prototype.getClutterActor = function() {
         width: 100
     });
     canvas.set_size(100,100);
-    canvas.connect('draw', Lang.bind(this, this.drawGreen));
+    canvas.connect('draw', (area, ctx) => { this.drawGreen(area, ctx); });
     canvas.invalidate();
 
     actor = new Clutter.Actor({

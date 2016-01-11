@@ -46,8 +46,8 @@ const App = function () {
 App.prototype.run = function (ARGV) {
 
     this.application = new Gtk.Application();
-    this.application.connect('activate', Lang.bind(this, this.onActivate));
-    this.application.connect('startup', Lang.bind(this, this.onStartup));
+    this.application.connect('activate', () => { this.onActivate(); });
+    this.application.connect('startup', () => { this.onStartup(); });
     this.application.run([]);
 };
 
@@ -82,10 +82,10 @@ App.prototype.getBody = function() {
     let buttonR, buttonW, grid;
 
     buttonR = new Gtk.Button({ hexpand: true, halign: Gtk.Align.CENTER, label: 'Read JSON' });
-    buttonR.connect ('clicked', Lang.bind (this, this.read));
+    buttonR.connect ('clicked', () => { this.read(); });
 
     buttonW = new Gtk.Button({ hexpand: true, halign: Gtk.Align.CENTER, label: 'Write JSON' });
-    buttonW.connect ('clicked', Lang.bind (this, this.write));
+    buttonW.connect ('clicked', () => { this.write(); });
 
     this.label = new Gtk.Label({ label: '' });
 
@@ -103,7 +103,7 @@ App.prototype.read = function() {
 
     file = Gio.File.new_for_path(path + '/assets/egJSON.json');
 
-    file.load_contents_async(null, Lang.bind(this, function(file, res) {
+    file.load_contents_async(null, (file, res) => {
         let contents;
         try {
             contents = file.load_contents_finish(res)[1].toString();
@@ -115,7 +115,7 @@ App.prototype.read = function() {
         } catch (e) {
             return;
         }
-    }));
+    });
 };
 
 App.prototype.write = function() {
@@ -130,7 +130,7 @@ App.prototype.write = function() {
         file = Gio.File.new_for_path(path + '/assets/egJSON.json');
         file.replace_async(null, false, 
             Gio.FileCreateFlags.REPLACE_DESTINATION,
-            GLib.PRIORITY_LOW, null, Lang.bind(this, function(file, res) {
+            GLib.PRIORITY_LOW, null, (file, res) => {
 
                 let stream;
                 if (!res.had_error()) {
@@ -139,7 +139,7 @@ App.prototype.write = function() {
                     // Write more data with stream.write ...
                     stream.close(null);
                 }
-        }));
+        });
 
     } else {
         this.label.set_text('Read the file first');
