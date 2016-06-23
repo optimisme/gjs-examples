@@ -57,7 +57,8 @@ App.prototype.onStartup = function() {
 
 App.prototype.buildUI = function() {
 
-    let result = false;
+    let result = false,
+        str = ' In Wayland there is no \n such thing as a window icon, \n the application icon must \n be set from the .desktop file';
 
     this.window = new Gtk.ApplicationWindow({ application: this.application,
                                               title: this.title,
@@ -69,8 +70,9 @@ App.prototype.buildUI = function() {
     } catch (err) {
         this.window.set_icon_name('application-x-executable');
     }
+    log(str);
 
-    this.label = new Gtk.Label({ label: "Hello icon" });
+    this.label = new Gtk.Label({ label: str });
     this.window.add(this.label);
 };
 
