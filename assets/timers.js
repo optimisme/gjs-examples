@@ -1,9 +1,13 @@
 const Mainloop = imports.mainloop;
 
-const setTimeout = function(func, millis) {
+const setTimeout = function(func, millis /* , ... args */) {
 
-    let id = Mainloop.timeout_add(millis, function () {
-        func();
+    let id = Mainloop.timeout_add(millis, () => {
+        let args = [];
+        if (arguments.length > 2) {
+            args = arguments.slice(2);
+        }
+        func.apply(null, args);
         return false; // Stop repeating
     }, null);
 
@@ -14,12 +18,18 @@ const clearTimeout = function(id) {
 
     Mainloop.source_remove(id);
 };
-const setInterval = function(func, millis) {
 
-    let id = Mainloop.timeout_add(millis, function () {
-        func();
+const setInterval = function(func, millis /* , ... args */) {
+
+    let id = Mainloop.timeout_add(millis, () => {
+        let args = [];
+        if (arguments.length > 2) {
+            args = arguments.slice(2);
+        }
+        func.apply(null, args);        
         return true; // Repeat
     }, null);
+    
     return id;
 };
 
