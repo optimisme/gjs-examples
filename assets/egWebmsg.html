@@ -9,8 +9,8 @@
             document.getElementById ("msg").innerHTML = (message);
         }
         function messageToGTK () {
-            // Webkit will change 'status bar/window.status' text to send messages to GTK
-            window.status = 'Message from Webkit';
+            // Webkit will emit 'notify::title' signal to send messages to GTK
+            document.title = 'Message from Webkit';
         }
         </script>
 

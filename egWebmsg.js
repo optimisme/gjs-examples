@@ -13,7 +13,7 @@ const Gio   = imports.gi.Gio;
 const GLib  = imports.gi.GLib;
 const Gtk   = imports.gi.Gtk;
 const Lang  = imports.lang;
-const Webkit = imports.gi.WebKit;
+const Webkit = imports.gi.WebKit2;
 
 // Get application folder and add it into the imports path
 function getAppFileInfo() {
@@ -79,15 +79,17 @@ App.prototype.getBody = function() {
 
     webView = new Webkit.WebView({ vexpand: true });
     webView.load_uri(GLib.filename_to_uri (path + '/assets/egWebmsg.html', null));
-    webView.connect('status_bar_text_changed', (arg, txt) => {
-        // Get Webkit messages into GTK listening to 'status bar/window.status' signals
-        label.label = txt;
+    webView.connect('notify::title', (self, params) => {
+        // Get Webkit messages into GTK listening to 'notify::title' signals
+        label.label = webView.title;
     });
 
     button = new Gtk.Button({ label: 'GTK to Webkit message' });
     button.connect('clicked', () => {
             // Execute one Webkit function to send a message from GTK to Webkit
-            webView.execute_script('messageFromGTK("Message from GTK!");');
+            webView.run_javascript('messageFromGTK("Message from GTK!");', null, (self, result, error) => {
+                self.run_javascript_finish(result);
+            });
         });
 
     label = new Gtk.Label({ label: '' });
